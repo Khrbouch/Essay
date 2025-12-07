@@ -7,7 +7,7 @@ let sessionCount = 1;
 
 // Timer presets (in seconds) - with default values
 let modes = {
-  pomodoro: 25 * 60,
+  pomodoro: 1 * 60, // Changed to 1 minute for testing
   shortBreak: 5 * 60,
   longBreak: 15 * 60
 };
@@ -26,13 +26,16 @@ const modeElements = {
   longBreak: document.getElementById('long-break-mode')
 };
 
-// Modal elements
-const settingsModal = document.getElementById('settings-modal');
-const pomodoroTimeInput = document.getElementById('pomodoro-time');
-const shortBreakTimeInput = document.getElementById('short-break-time');
-const longBreakTimeInput = document.getElementById('long-break-time');
-const saveSettingsBtn = document.getElementById('save-settings');
-const cancelSettingsBtn = document.getElementById('cancel-settings');
+// These will be initialized after modal loads
+let settingsModal;
+let pomodoroTimeInput;
+let shortBreakTimeInput;
+let longBreakTimeInput;
+let saveSettingsBtn;
+let cancelSettingsBtn;
+
+// Flag to track if modal is loaded
+let modalLoaded = false;
 
 // Format time as MM:SS
 function formatTime(seconds) {
@@ -174,8 +177,44 @@ function playNotification() {
   }
 }
 
+// Initialize modal elements after they are loaded
+function initModalElements() {
+  settingsModal = document.getElementById('settings-modal');
+  pomodoroTimeInput = document.getElementById('pomodoro-time');
+  shortBreakTimeInput = document.getElementById('short-break-time');
+  longBreakTimeInput = document.getElementById('long-break-time');
+  saveSettingsBtn = document.getElementById('save-settings');
+  cancelSettingsBtn = document.getElementById('cancel-settings');
+  
+  if (settingsModal && saveSettingsBtn && cancelSettingsBtn) {
+    modalLoaded = true;
+    setupModalEventListeners();
+  }
+}
+
+// Setup modal event listeners
+function setupModalEventListeners() {
+  if (!modalLoaded) return;
+  
+  // Settings modal events
+  saveSettingsBtn.addEventListener('click', saveSettings);
+  cancelSettingsBtn.addEventListener('click', closeSettingsModal);
+  
+  // Close modal when clicking outside
+  settingsModal.addEventListener('click', (e) => {
+    if (e.target === settingsModal) {
+      closeSettingsModal();
+    }
+  });
+}
+
 // Open settings modal
 function openSettingsModal() {
+  if (!modalLoaded) {
+    console.error('Modal not loaded yet');
+    return;
+  }
+  
   // Load current values
   pomodoroTimeInput.value = modes.pomodoro / 60;
   shortBreakTimeInput.value = modes.shortBreak / 60;
@@ -186,11 +225,15 @@ function openSettingsModal() {
 
 // Close settings modal
 function closeSettingsModal() {
-  settingsModal.style.display = 'none';
+  if (settingsModal) {
+    settingsModal.style.display = 'none';
+  }
 }
 
 // Save settings
 function saveSettings() {
+  if (!modalLoaded) return;
+  
   // Convert minutes to seconds
   modes = {
     pomodoro: parseInt(pomodoroTimeInput.value) * 60,
@@ -205,7 +248,7 @@ function saveSettings() {
   closeSettingsModal();
 }
 
-// Event listeners
+// Event listeners for timer controls
 startBtn.addEventListener('click', startTimer);
 pauseBtn.addEventListener('click', pauseTimer);
 resetBtn.addEventListener('click', resetTimer);
@@ -214,18 +257,23 @@ modeElements.pomodoro.addEventListener('click', () => setMode('pomodoro'));
 modeElements.shortBreak.addEventListener('click', () => setMode('shortBreak'));
 modeElements.longBreak.addEventListener('click', () => setMode('longBreak'));
 
-// Settings modal events
+// Settings button event listener
 settingsBtn.addEventListener('click', openSettingsModal);
-saveSettingsBtn.addEventListener('click', saveSettings);
-cancelSettingsBtn.addEventListener('click', closeSettingsModal);
-
-// Close modal when clicking outside
-settingsModal.addEventListener('click', (e) => {
-  if (e.target === settingsModal) {
-    closeSettingsModal();
-  }
-});
 
 // Initialize timer
 updateTimerDisplay();
 showStartOnly(); // Initially show only the start button
+
+// Listen for modal loaded event or check periodically
+function checkModalLoaded() {
+  if (document.getElementById('settings-modal')) {
+    initModalElements();
+    console.log('Modal loaded and initialized');
+  } else {
+    // Check again after a short delay
+    setTimeout(checkModalLoaded, 100);
+  }
+}
+
+// Start checking for modal
+checkModalLoaded();
