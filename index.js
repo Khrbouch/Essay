@@ -7,7 +7,7 @@ let sessionCount = 1;
 
 // Timer presets (in seconds) - with default values
 let modes = {
-  pomodoro: 1 * 60, // Changed to 1 minute for testing
+  pomodoro: 25 * 60, // Changed to 1 minute for testing
   shortBreak: 5 * 60,
   longBreak: 15 * 60
 };
@@ -277,3 +277,4 @@ function checkModalLoaded() {
 
 // Start checking for modal
 checkModalLoaded();
+
