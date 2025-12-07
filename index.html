@@ -4,18 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Study Focus Timer</title>
-  <link rel="stylesheet" href="deep1.css">
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="settings.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="whole">
     <div class="upper">
       <h1>Study Focus</h1>
       <div>
-        <button><img src="login.png" alt="Login" class="acces" id="login"></button>
+        <button><img src="login.png" alt="Login" class="acces" id="login-btn"></button>
         <button><img src="statistique.png" alt="Statistique" class="acces" id="Stats"></button>
         <button><img src="parametres.png" alt="Parametre" class="acces" id="Para"></button>
       </div>
     </div>
+
+    <div id="login-form-container"></div>
     
     <div class="timer">
       <div class="mode-selector">
@@ -38,35 +42,16 @@
     </div>
 
     <div class="task-section">
-      <span>Add Project</span>
+      <!-- <span>Add Project</span> -->
+       <span>Add Task</span>
       <input type="button" value="+">
-      <span>Add Task</span>
     </div>
   </div>
-  <!-- Add this before </body> -->
-  <div id="settings-modal" class="modal" style="display: none;">
-    <div class="modal-content">
-      <h3>Timer Settings</h3>
-      <div class="setting-item">
-        <label for="pomodoro-time">Pomodoro (minutes):</label>
-        <input type="number" id="pomodoro-time" min="1" max="60" value="1">
-      </div>
-      <div class="setting-item">
-        <label for="short-break-time">Short Break (minutes):</label>
-        <input type="number" id="short-break-time" min="1" max="30" value="5">
-      </div>
+  
+  <div id="modal-container"></div>
 
-      <div class="setting-item">
-        <label for="long-break-time">Long Break (minutes):</label>
-        <input type="number" id="long-break-time" min="1" max="60" value="15">
-      </div>
-      <div class="modal-buttons">
-        <button id="save-settings">Save</button>
-        <button id="cancel-settings">Cancel</button>
-      </div>
-    </div>
-  </div>
-
+  <script src="settings.js"></script>
   <script src="index.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
