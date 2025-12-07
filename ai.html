@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Focus Timer</title>
+  <link rel="stylesheet" href="deep1.css">
+</head>
+<body>
+  <div class="whole">
+    <div class="upper">
+      <h1>Study Focus</h1>
+      <div>
+        <button><img src="login.png" alt="Login" class="acces" id="login"></button>
+        <button><img src="statistique.png" alt="Statistique" class="acces" id="Stats"></button>
+        <button><img src="parametres.png" alt="Parametre" class="acces" id="Para"></button>
+      </div>
+    </div>
+    
+    <div class="timer">
+      <div class="mode-selector">
+        <span id="pomodoro-mode" class="active">Pomodoro</span>
+        <span id="short-break-mode">Short Break</span>
+        <span id="long-break-mode">Long Break</span>
+      </div>
+      
+      <h2 id="timer-display">25:00</h2>
+      
+      <div class="Btn">
+        <button id="start-btn">Start</button>
+        <button id="pause-btn" disabled>Pause</button>
+        <button id="reset-btn">Reset</button>
+      </div>
+    </div>
+
+    <div class="number">
+      <h3 id="session-counter">#1 Session</h3>
+    </div>
+
+    <div class="task-section">
+      <span>Add Project</span>
+      <input type="button" value="+">
+      <span>Add Task</span>
+    </div>
+  </div>
+  <!-- Add this before </body> -->
+  <div id="settings-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>Timer Settings</h3>
+      <div class="setting-item">
+        <label for="pomodoro-time">Pomodoro (minutes):</label>
+        <input type="number" id="pomodoro-time" min="1" max="60" value="1">
+      </div>
+      <div class="setting-item">
+        <label for="short-break-time">Short Break (minutes):</label>
+        <input type="number" id="short-break-time" min="1" max="30" value="5">
+      </div>
+
+      <div class="setting-item">
+        <label for="long-break-time">Long Break (minutes):</label>
+        <input type="number" id="long-break-time" min="1" max="60" value="15">
+      </div>
+      <div class="modal-buttons">
+        <button id="save-settings">Save</button>
+        <button id="cancel-settings">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
